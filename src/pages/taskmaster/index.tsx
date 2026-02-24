@@ -59,16 +59,16 @@ export function TaskMaster(){
         <div className="flex flex-col items-center justify-center gap-10">
             <h1 className='text-4xl font-bold text-sky-500 text-center'>TASKMASTER</h1>
 
-            <form onSubmit={handleSubmit(submitForm)} className="flex flex-col items-end p-10 gap-10">
+            <form onSubmit={handleSubmit(submitForm)} className="flex flex-col items-end pt-10 gap-10">
                 <div className="flex gap-10">
                     <div className="relative">
                         <label htmlFor="taskTitle" className="absolute -top-5 left-3 text-[0.8rem]">Título</label>
-                        <input type="text" placeholder="..." id="taskTitle" {...register('taskTitle')} className="border bg-slate-800/80 border-slate-700 rounded-xl w-100 px-5 py-1"/>
+                        <input type="text" placeholder="..." id="taskTitle" {...register('taskTitle')} className="border bg-slate-800/80 border-slate-700 rounded-xl w-100 px-5 py-1 outline-0"/>
                         {errors.taskTitle && <span className="absolute -bottom-4 left-2 text-red-700 text-[0.75rem]">{errors.taskTitle.message}</span>}
                     </div>
                     <div className="relative">
                         <label htmlFor="taskType" className="absolute -top-5 left-3 text-[0.8rem]">Categoria</label>
-                        <input type="text" placeholder="..." id="taskType" {...register('taskType')} className="border bg-slate-800/80 border-slate-700 rounded-xl w-50 px-5 py-1"/>
+                        <input type="text" placeholder="..." id="taskType" {...register('taskType')} className="border bg-slate-800/80 border-slate-700 rounded-xl w-50 px-5 py-1 outline-0"/>
                         {errors.taskType && <span className="absolute -bottom-4 left-2 text-red-700 text-[0.75rem]">{errors.taskType.message}</span>}
                     </div>
                     <div className="relative">

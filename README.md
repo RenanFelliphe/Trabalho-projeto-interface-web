@@ -1,12 +1,12 @@
-# 🚀 UsefulToolsPortal
+🚀 UsefulToolsPortal
 
 Aplicação web desenvolvida em **React + TypeScript** com o objetivo de centralizar organização pessoal em um único ambiente digital.
 
 O sistema é composto por três módulos principais:
 
-- ✅ **TaskMaster** – Gestão de Tarefas  
-- 💰 **MoneyFlow** – Controle Financeiro  
-- 📇 **ConnectHub** – Gerenciamento de Contatos  
+- **TaskMaster** – Gestão de Tarefas  
+- **MoneyFlow** – Controle Financeiro  
+- **ConnectHub** – Gerenciamento de Contatos  
 
 ---
 
@@ -39,7 +39,7 @@ O sistema utiliza validação robusta com **Zod**, gerenciamento de formulários
 
 ## 📂 Estrutura dos Módulos
 
-### 🟢 TaskMaster
+### TaskMaster
 Gerenciamento completo de tarefas com:
 
 - Cadastro com validação
@@ -50,7 +50,7 @@ Gerenciamento completo de tarefas com:
 
 ---
 
-### 💰 MoneyFlow
+### MoneyFlow
 Controle financeiro simples e eficiente:
 
 - Registro de entradas e saídas
@@ -60,7 +60,7 @@ Controle financeiro simples e eficiente:
 
 ---
 
-### 📇 ConnectHub
+### ConnectHub
 Gerenciamento de contatos com:
 
 - Nome, e-mail e telefone

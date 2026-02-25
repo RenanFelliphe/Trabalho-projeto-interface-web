@@ -1,73 +1,95 @@
-# React + TypeScript + Vite
+# 🚀 UsefulToolsPortal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web desenvolvida em **React + TypeScript** com o objetivo de centralizar organização pessoal em um único ambiente digital.
 
-Currently, two official plugins are available:
+O sistema é composto por três módulos principais:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ✅ **TaskMaster** – Gestão de Tarefas  
+- 💰 **MoneyFlow** – Controle Financeiro  
+- 📇 **ConnectHub** – Gerenciamento de Contatos  
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📌 Visão do Produto
 
-## Expanding the ESLint configuration
+O UsefulToolsPortal foi desenvolvido para auxiliar utilizadores na organização de tarefas, controle financeiro e gestão de contatos de forma simples, intuitiva e eficiente.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+A aplicação entrega valor ao permitir:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Organização clara de atividades por prioridade
+- Controle de entradas e saídas financeiras com saldo automático
+- Armazenamento estruturado de contatos
+- Persistência de dados mesmo após atualização da página
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+O sistema utiliza validação robusta com **Zod**, gerenciamento de formulários com **React Hook Form** e persistência com **LocalStorage**, garantindo consistência e boa experiência de uso.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠️ Tecnologias Utilizadas
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- React
+- TypeScript
+- React Router DOM
+- React Hook Form
+- Zod
+- TailwindCSS
+- LocalStorage (Persistência de Dados)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+## 📂 Estrutura dos Módulos
+
+### 🟢 TaskMaster
+Gerenciamento completo de tarefas com:
+
+- Cadastro com validação
+- Definição de categoria
+- Nível de prioridade com destaque visual
+- Exclusão de tarefas
+- Persistência no LocalStorage
+
+---
+
+### 💰 MoneyFlow
+Controle financeiro simples e eficiente:
+
+- Registro de entradas e saídas
+- Cálculo automático do saldo
+- Histórico de transações
+- Persistência no LocalStorage
+
+---
+
+### 📇 ConnectHub
+Gerenciamento de contatos com:
+
+- Nome, e-mail e telefone
+- Validação de campos
+- Listagem dinâmica
+- Persistência no LocalStorage
+
+---
+
+## 📊 Funcionalidades Implementadas
+
+- ✅ Validação completa de formulários com Zod
+- ✅ Estados derivados calculados corretamente
+- ✅ Persistência com LocalStorage
+- ✅ Renderização dinâmica com React
+- ✅ Navegação com React Router
+- ✅ Feedback visual de erros
+- ✅ Interface responsiva com TailwindCSS
+
+---
+
+## 🚀 Como Executar o Projeto
+
+```bash
+# Clonar repositório
+git clone https://github.com/RenanFelliphe/Trabalho-projeto-interface-web
+
+# Instalar dependências
+npm install
+
+# Executar aplicação
+npm run dev

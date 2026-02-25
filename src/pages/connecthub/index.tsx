@@ -48,7 +48,7 @@ export function ConnectHub(){
             userNumber: data.userNumber
         })
 
-        setUser(oldState => [...oldState, newUSer])
+        setUser(oldState => [newUSer, ...oldState])
         console.log(allUsers)
     }
 
@@ -83,37 +83,39 @@ export function ConnectHub(){
                     </div>
                 </form>   
 
-                { 
-                    allUsers.length > 0 && (
+                <div>
+                    <h1 className='text-3xl font-bold text-slate-100 text-left my-5'>Seus Contatos</h1>
+                    
+                    { 
+                        allUsers.length > 0 && (
+                                <div className='hideScrollbar flex flex-col gap-3 h-80 w-180 overflow-scroll'>
 
-                        <div className='w-180 flex flex-col gap-3 py-5'>
-                            <h1 className='text-3xl font-bold text-slate-100 text-left my-5'>Seus Contatos</h1>
+                                    {
+                                        allUsers.map((user) => (
+                                            <div key={user.userEmail} className='flex justify-between border-l border-sky-500 px-5'>
+                                                <div className='flex flex-col'>
+                                                    <p className='flex gap-3 items-center'>
+                                                        <FaUser className='text-sky-400'/> 
+                                                        {user.userName}
+                                                    </p>
 
-                            {
-                                allUsers.map((user) => (
-                                    <div key={user.userEmail} className='flex justify-between border-l border-sky-500 px-5'>
-                                        <div className='flex flex-col'>
-                                            <p className='flex gap-3 items-center'>
-                                                <FaUser className='text-sky-400'/> 
-                                                {user.userName}
-                                            </p>
+                                                    <p className='flex gap-3 items-center'>
+                                                        <MdEmail className='text-sky-400'/> 
+                                                        {user.userEmail}
+                                                    </p>
+                                                </div>
 
-                                            <p className='flex gap-3 items-center'>
-                                                <MdEmail className='text-sky-400'/> 
-                                                {user.userEmail}
-                                            </p>
-                                        </div>
-
-                                        <p className='flex gap-3 items-center'>
-                                            {user.userNumber}
-                                            <FaPhone className='text-sky-400'/>
-                                        </p>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    ) 
-                }
+                                                <p className='flex gap-3 items-center'>
+                                                    {user.userNumber}
+                                                    <FaPhone className='text-sky-400'/>
+                                                </p>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            ) 
+                        }
+                </div>
             </div> 
         </>
     )

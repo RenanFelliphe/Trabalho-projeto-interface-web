@@ -55,7 +55,7 @@ export function TaskMaster(){
             taskPriority
         }
 
-        setTasks(oldState => [...oldState, newTask])
+        setTasks(oldState => [newTask, ...oldState])
     }
 
     return (
@@ -97,43 +97,45 @@ export function TaskMaster(){
 
             { 
                 allTasks.length > 0 && (
-                    <div className='relative w-220 flex flex-col gap-5 px-5'>
+                    <div className=''>
                         <h1 className='text-3xl font-bold text-slate-100 text-left my-5'>Suas Tarefas</h1>
-                        
-                        {
-                            allTasks.map((task) => {
-                                let priorityColor = ""
 
-                                if (task.taskPriority === "100") {
-                                    priorityColor = "text-red-500"
-                                } else if (task.taskPriority === "75") {
-                                    priorityColor = "text-orange-500"
-                                } else if (task.taskPriority === "50") {
-                                    priorityColor = "text-yellow-500"
-                                } else if (task.taskPriority === "25") {
-                                    priorityColor = "text-green-400"
-                                } else {
-                                    priorityColor = "text-blue-400"
-                                }
-
-                                return (
-                                    <li key={task.taskId} className={`border-l ${priorityColor} pl-5 relative flex justify-between items-center w-full`}>
-                                        <span className='text-slate-100'>{task.taskTitle}</span>
-                                        <div className='flex gap-10 items-center text-slate-100'>
-                                            <span>{task.taskType}</span>
-                                            <div className='flex gap-5'>
-                                                <span className={`flex justify-center items-center border rounded-sm px-2 py-2 cursor-pointer ${priorityColor}`}>
-                                                    <IoIosWarning/>
-                                                </span>
-                                                <span className="flex justify-center items-center border rounded-sm px-2 py-2 cursor-pointer text-red-500" onClick={() => deleteTask(task.taskId)}>
-                                                    <FaTrashAlt/>
-                                                </span>
+                        <div className='hideScrollbar relative w-220 flex flex-col gap-5 px-5 h-90 overflow-scroll'>
+                            {
+                                allTasks.map((task) => {
+                                    let priorityColor = ""
+                                    
+                                    if (task.taskPriority === "100") {
+                                        priorityColor = "text-red-500"
+                                    } else if (task.taskPriority === "75") {
+                                        priorityColor = "text-orange-500"
+                                    } else if (task.taskPriority === "50") {
+                                        priorityColor = "text-yellow-500"
+                                    } else if (task.taskPriority === "25") {
+                                        priorityColor = "text-green-400"
+                                    } else {
+                                        priorityColor = "text-blue-400"
+                                    }
+                                    
+                                    return (
+                                        <li key={task.taskId} className={`border-l ${priorityColor} pl-5 relative flex justify-between items-center w-full`}>
+                                            <span className='text-slate-100'>{task.taskTitle}</span>
+                                            <div className='flex gap-10 items-center text-slate-100'>
+                                                <span>{task.taskType}</span>
+                                                <div className='flex gap-5'>
+                                                    <span className={`flex justify-center items-center border rounded-sm px-2 py-2 cursor-pointer ${priorityColor}`}>
+                                                        <IoIosWarning/>
+                                                    </span>
+                                                    <span className="flex justify-center items-center border rounded-sm px-2 py-2 cursor-pointer text-red-500" onClick={() => deleteTask(task.taskId)}>
+                                                        <FaTrashAlt/>
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </li>
-                                )
-                            })
-                        }
+                                        </li>
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 )
             }

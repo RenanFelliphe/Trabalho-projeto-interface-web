@@ -118,35 +118,36 @@ export function MoneyFlow(){
                         { hasNotification ? <span className='absolute top-0.75 -right-px rounded-xl bg-green-400 w-2 h-2 border border-green-600'></span> : ''}
                     </div>
 
-                    <div className={`absolute top-12 left-0 z-50 bg-slate-800/95 border border-slate-700 rounded-xl p-5 pt-8 min-w-80 max-w-250 flex flex-col gap-1 transition-all duration-200 ${isModalOpen ? "flex opacity-100" : "hidden opacity-0"}`}>
+                    <div className={`absolute top-12 left-0 z-50 bg-slate-800/95 border border-slate-700 rounded-xl px-7 py-8 min-w-80 max-w-250 flex flex-col transition-all duration-200 ${isModalOpen ? "flex opacity-100" : "hidden opacity-0"}`}>
                         <span className='absolute right-3 top-3 border rounded border-slate-600 text-slate-500 hover:border-red-700 hover:text-red-700 hover:scale-110 cursor-pointer transition-all duration-100' onClick={() => toggleModal()}><IoClose/></span>
-                        
                         <h1 className="font-bold text-center text-[1.2rem] mb-3 text-white">Histórico de Transações</h1>
-                        { isFirstTransaction ? <span className='text-slate-400 text-sm text-center'>Você ainda não fez nenhuma transação</span> : ''}
-                        {
-                            allTransactions.map((transaction) => (
-                            <div key={transaction.transactionId} className='flex gap-5 items-center justify-between cursor-default'>
-                                <span className='text-slate-400 text-sm'>{transaction.transactionDescription}</span>
-                                {
-                                    transaction.transactionType === "income" ? (
-                                        <div className='flex items-center justify-end gap-2 text-sm whitespace-nowrap text-green-500'>
-                                            <span>+ {transaction.transactionValue}</span>
-                                            <span className="flex justify-center items-center border scale-70 rounded-xl px-2 py-2 text-green-500">
-                                                <FaArrowUp />
-                                            </span>
-                                        </div>
-                                     ) : (
-                                        <div className='flex items-center justify-end gap-2 text-sm whitespace-nowrap text-red-500'>
-                                            <span>- {transaction.transactionValue}</span>
-                                            <span className="flex justify-center items-center border scale-70 rounded-xl px-2 py-2 text-red-500">
-                                                <FaArrowDown />
-                                            </span>
-                                        </div>
-                                     )
-                                }
-                            </div>
-                            ))
-                        }
+                        <div className='hideScrollbar overflow-scroll max-h-80'>
+                            { isFirstTransaction ? <span className='text-slate-400 text-sm text-center'>Você ainda não fez nenhuma transação</span> : ''}
+                            {
+                                allTransactions.map((transaction) => (
+                                    <div key={transaction.transactionId} className='flex gap-5 items-center justify-between cursor-default'>
+                                    <span className='text-slate-400 text-sm'>{transaction.transactionDescription}</span>
+                                    {
+                                        transaction.transactionType === "income" ? (
+                                            <div className='flex items-center justify-end gap-2 text-sm whitespace-nowrap text-green-500'>
+                                                <span>+ {transaction.transactionValue}</span>
+                                                <span className="flex justify-center items-center border scale-70 rounded-xl px-2 py-2 text-green-500">
+                                                    <FaArrowUp />
+                                                </span>
+                                            </div>
+                                        ) : (
+                                            <div className='flex items-center justify-end gap-2 text-sm whitespace-nowrap text-red-500'>
+                                                <span>- {transaction.transactionValue}</span>
+                                                <span className="flex justify-center items-center border scale-70 rounded-xl px-2 py-2 text-red-500">
+                                                    <FaArrowDown />
+                                                </span>
+                                            </div>
+                                        )
+                                        }
+                                </div>
+                                ))
+                            }
+                        </div>
                     </div>
                 </div>
 

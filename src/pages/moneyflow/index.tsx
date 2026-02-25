@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from 'zod'
@@ -43,11 +43,12 @@ export function MoneyFlow(){
         resolver: zodResolver(expenseRules),
     })
 
-    const [balanceValue, setBalanceValue] = useState<number>(0)
-
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [hasNotification, setNotification] = useState(false)
+    const [isFirstTransaction, setFirstTransaction] = useState(true)
 
     function toggleModal(): void {
+        hasNotification ? setNotification(!hasNotification) : ''
         setIsModalOpen(!isModalOpen)
     }
 
@@ -58,8 +59,27 @@ export function MoneyFlow(){
         transactionDescription: string
     }
 
-    const [allTransactions, setTransaction] = useState<ITransaction[]>([])
+    const [allTransactions, setTransaction] = useState<ITransaction[]>(() => {
+        const storedTransactions = localStorage.getItem("transactions")
+        return storedTransactions ? JSON.parse(storedTransactions) : []
+    })
     
+    useEffect(() => {
+        localStorage.setItem("transactions", JSON.stringify(allTransactions))
+    }, [allTransactions])
+
+    const balanceValue = allTransactions.reduce((acc, transaction) => {
+        return transaction.transactionType === "income"
+            ? acc + transaction.transactionValue
+            : acc - transaction.transactionValue
+    }, 0)
+
+    function transactionFunctions(transaction: ITransaction){
+        hasNotification ? '' : setNotification(!hasNotification)
+        isFirstTransaction ? setFirstTransaction(!isFirstTransaction) : ''
+        setTransaction(oldState => [transaction, ...oldState]) 
+    }
+
     function incomeSubmit(data: IIncomeForm) {
         const newTransaction: ITransaction = {
             transactionId: Math.random().toString(36).substring(2, 9),
@@ -68,10 +88,9 @@ export function MoneyFlow(){
             transactionDescription: data.incomeDescription
         }
 
-        incomeReset()
-        setBalanceValue(balanceValue + data.incomeValue)
-        setTransaction(oldState => [newTransaction, ...oldState])    
-}
+        incomeReset() 
+        transactionFunctions(newTransaction)
+    }
 
     function expenseSubmit(data: IExpenseForm) {
         const newTransaction: ITransaction = {
@@ -81,10 +100,9 @@ export function MoneyFlow(){
             transactionDescription: data.expenseDescription
         }
 
-        expenseReset()
-        setBalanceValue(balanceValue - data.expenseValue)
-        setTransaction(oldState => [newTransaction, ...oldState])    
-}
+        expenseReset()  
+        transactionFunctions(newTransaction)
+    }
 
     return (
         <>
@@ -95,12 +113,16 @@ export function MoneyFlow(){
                     <h1 className='text-4xl font-bold text-white text-center'>Saldo Atual:</h1>
                     <h1 className='text-4xl font-bold text-sky-500 text-center'>R$ {balanceValue}</h1>
                     
-                    <GoHistory className="mt-1 cursor-pointer text-white size-5 hover:text-sky-400 transition" onClick={toggleModal}/>
+                    <div className='relative'>
+                        <GoHistory className="mt-1 cursor-pointer text-white size-5 hover:text-sky-400 transition" onClick={toggleModal}/>
+                        { hasNotification ? <span className='absolute top-0.75 -right-px rounded-xl bg-green-400 w-2 h-2 border border-green-600'></span> : ''}
+                    </div>
 
                     <div className={`absolute top-12 left-0 z-50 bg-slate-800/95 border border-slate-700 rounded-xl p-5 pt-8 min-w-80 max-w-250 flex flex-col gap-1 transition-all duration-200 ${isModalOpen ? "flex opacity-100" : "hidden opacity-0"}`}>
                         <span className='absolute right-3 top-3 border rounded border-slate-600 text-slate-500 hover:border-red-700 hover:text-red-700 hover:scale-110 cursor-pointer transition-all duration-100' onClick={() => toggleModal()}><IoClose/></span>
-
+                        
                         <h1 className="font-bold text-center text-[1.2rem] mb-3 text-white">Histórico de Transações</h1>
+                        { isFirstTransaction ? <span className='text-slate-400 text-sm text-center'>Você ainda não fez nenhuma transação</span> : ''}
                         {
                             allTransactions.map((transaction) => (
                             <div key={transaction.transactionId} className='flex gap-5 items-center justify-between cursor-default'>
@@ -138,7 +160,7 @@ export function MoneyFlow(){
                         </div>
                         <div className="relative">
                             <label htmlFor="incomeValue" className="absolute -top-5 left-3 text-[0.8rem]">Valor da Entrada</label>
-                            <input type="text" placeholder="R$" id="incomeValue" {...incomeRegister("incomeValue", { valueAsNumber: true })} className="border bg-slate-800/80 border-slate-700 rounded-xl w-50 px-5 py-1 outline-0"/>
+                            <input type="number" placeholder="R$" id="incomeValue" {...incomeRegister("incomeValue", { valueAsNumber: true })} className="border bg-slate-800/80 border-slate-700 rounded-xl w-50 px-5 py-1 outline-0"/>
                             { incomeErrors.incomeValue && <span className="absolute -bottom-4 left-2 text-red-700 text-[0.75rem]">{incomeErrors.incomeValue.message}</span>}
                         </div>
                     </div>
@@ -158,7 +180,7 @@ export function MoneyFlow(){
                         </div>
                         <div className="relative">
                             <label htmlFor="expenseValue" className="absolute -top-5 left-3 text-[0.8rem]">Valor da Saída</label>
-                            <input type="text" placeholder="R$" id="expenseValue" {...expenseRegister("expenseValue", { valueAsNumber: true })} className="border bg-slate-800/80 border-slate-700 rounded-xl w-50 px-5 py-1 outline-0"/>
+                            <input type="number" placeholder="R$" id="expenseValue" {...expenseRegister("expenseValue", { valueAsNumber: true })} className="border bg-slate-800/80 border-slate-700 rounded-xl w-50 px-5 py-1 outline-0"/>
                             {expenseErrors.expenseValue && <span className="absolute -bottom-4 left-2 text-red-700 text-[0.75rem]"> {expenseErrors.expenseValue.message}</span>}
                         </div>
                     </div>

@@ -13,12 +13,12 @@ export function Footer(){
                         Feito por <span className="text-sky-400 font-medium">Renan Felliphe</span>
                     </span>
 
-                    <a href="https://instagram.com/renan_felliphe11" target="_blank"
+                    <a href="https://instagram.com/renan_felliphe11" target="_blank" rel="noopener noreferrer"
                         className="text-slate-400 hover:text-sky-400 transition-colors duration-300 text-sm">
                         Instagram
                     </a>
                     
-                    <a href="https://www.linkedin.com/in/renan-felliphe-moura-34ab1126a/" target="_blank"
+                    <a href="https://www.linkedin.com/in/renan-felliphe-moura-34ab1126a/" target="_blank" rel="noopener noreferrer"
                         className="text-slate-400 hover:text-sky-400 transition-colors duration-300 text-sm">
                         LinkedIn
                     </a>

@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form"
 import * as z from 'zod'
 import { FaUser, FaPhone } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import { RiContactsBookFill } from "react-icons/ri";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 export function ConnectHub(){
     const formRules = z.object({
@@ -39,6 +41,9 @@ export function ConnectHub(){
         resolver: zodResolver(formRules)
     })
 
+    const [isConntactSidebarOpen, setIsConntactSidebarOpen] = useState(false)
+    const [hasNotification, setNotification] = useState(false)
+
     function submitForm(data: IUserForm){
         reset()
 
@@ -48,11 +53,15 @@ export function ConnectHub(){
             userNumber: data.userNumber
         })
 
+        hasNotification ? '' : setNotification(!hasNotification)
         setUser(oldState => [newUSer, ...oldState])
-        console.log(allUsers)
     }
 
-    
+    function openSidebar(sidebar: "contact" | "task"){
+        sidebar === "contact" ? setIsConntactSidebarOpen(!isConntactSidebarOpen) : ''
+        hasNotification ? setNotification(!hasNotification) : '' 
+    }
+
     return (
         <>
             <div className="flex flex-col items-center justify-center gap-10">
@@ -61,18 +70,18 @@ export function ConnectHub(){
                 <form onSubmit={handleSubmit(submitForm)} className="flex flex-col items-end pt-10 gap-10">
                     <div className="relative w-full">
                         <label htmlFor="userName" className="absolute -top-5 left-3 text-[0.8rem]">Nome Completo</label>
-                        <input type="text" placeholder="..." id="userName" { ...register("userName") } className="border bg-slate-800/80 border-slate-700 rounded-xl w-full px-5 py-1 outline-0"/>
+                        <input type="text" placeholder="..." id="userName" { ...register("userName") } className="border bg-slate-800 border-slate-700 rounded-xl w-full px-5 py-1 outline-0"/>
                             {errors.userName && <span className="absolute -bottom-4 left-2 text-red-700 text-[0.75rem]"> {errors.userName.message} </span>}
                     </div>
                     <div className="flex gap-10">
                         <div className="relative">
                             <label htmlFor="userEmail" className="absolute -top-5 left-3 text-[0.8rem]">E-mail</label>
-                            <input type="text" placeholder="..." id="userEmail" { ...register("userEmail") } className="border bg-slate-800/80 border-slate-700 rounded-xl w-100 px-5 py-1 outline-0"/>
+                            <input type="text" placeholder="..." id="userEmail" { ...register("userEmail") } className="border bg-slate-800 border-slate-700 rounded-xl w-100 px-5 py-1 outline-0"/>
                             {errors.userEmail && <span className="absolute -bottom-4 left-2 text-red-700 text-[0.75rem]"> {errors.userEmail.message} </span>}
                         </div>
                         <div className="relative">
                             <label htmlFor="userNumber" className="absolute -top-5 left-3 text-[0.8rem]">Telefone</label>
-                            <input type="number" placeholder="..." id="userNumber" { ...register("userNumber") } className="border bg-slate-800/80 border-slate-700 rounded-xl w-50 px-5 py-1 outline-0"/>
+                            <input type="number" placeholder="..." id="userNumber" { ...register("userNumber") } className="border bg-slate-800 border-slate-700 rounded-xl w-50 px-5 py-1 outline-0"/>
                             {errors.userNumber && <span className="absolute -bottom-4 left-2 text-red-700 text-[0.75rem]"> {errors.userNumber.message} </span>}
                         </div>
                     </div>
@@ -83,39 +92,46 @@ export function ConnectHub(){
                     </div>
                 </form>   
 
-                <div>
-                    <h1 className='text-3xl font-bold text-slate-100 text-left my-5'>Seus Contatos</h1>
-                    
-                    { 
-                        allUsers.length > 0 && (
-                                <div className='hideScrollbar flex flex-col gap-3 h-80 w-180 overflow-scroll'>
-
-                                    {
-                                        allUsers.map((user) => (
-                                            <div key={user.userEmail} className='flex justify-between border-l border-sky-500 px-5'>
-                                                <div className='flex flex-col'>
-                                                    <p className='flex gap-3 items-center'>
-                                                        <FaUser className='text-sky-400'/> 
-                                                        {user.userName}
-                                                    </p>
-
-                                                    <p className='flex gap-3 items-center'>
-                                                        <MdEmail className='text-sky-400'/> 
-                                                        {user.userEmail}
-                                                    </p>
-                                                </div>
-
+                <aside className={`${isConntactSidebarOpen ? 'w-120' : 'w-0'} transition-width duration-400 fixed left-0 top-0 h-[90vh] mt-20 border-r border-slate-700 bg-slate-800 p-5`}>
+                    <div onClick={() => openSidebar("contact")} className='absolute right-[-2.8rem] top-15 py-4 px-3 rounded-r-xl border-t border-b border-r border-slate-700 bg-slate-800 cursor-pointer hover:text-sky-500'>
+                        { hasNotification ? <span className='absolute top-0 -right-0.5 rounded-xl bg-green-400 w-2.25 h-2.25 border border-green-600'></span> : ''}
+                        <RiContactsBookFill className='size-5'/>
+                    </div>
+                        <h1 className='hideScrollbar text-3xl font-bold text-slate-100 text-left py-5 overflow-scroll'>Meus Contatos</h1>
+                        <div className='hideScrollbar flex flex-col justify-start gap-3 h-[72vh] overflow-scroll'>
+                            {
+                                allUsers.length > 0 && (
+                                    allUsers.map((user) => (
+                                        <div key={user.userEmail} className='relative flex justify-between border-l border-sky-500 pl-5'>
+                                            <BsThreeDotsVertical className='absolute right-0 top-0 text-slate-400 cursor-pointer'/>
+                                            <div className='flex flex-col'>
                                                 <p className='flex gap-3 items-center'>
+                                                    <FaUser className='text-sky-400'/> 
+                                                    {user.userName}
+                                                </p>
+                                                <p className='flex gap-3 items-center'>
+                                                    <MdEmail className='text-sky-400 size-[1.1rem]'/> 
+                                                    {user.userEmail}
+                                                </p>
+                                                <p className='flex gap-3 items-center'>
+                                                    <FaPhone className='text-sky-400 size-[0.9rem]'/>
                                                     {user.userNumber}
-                                                    <FaPhone className='text-sky-400'/>
                                                 </p>
                                             </div>
-                                        ))
-                                    }
+                                        </div>
+                                    ))
+                                ) 
+                            }
+                        </div>
+                        {
+                            isConntactSidebarOpen ? (
+                                <div className='flex justify-center w-full'>
+                                    <span className='absolute bottom-12 h-px w-[25%] bg-slate-600'></span>
+                                    <span className='absolute bottom-10 h-px w-[5%] bg-slate-600'></span>
                                 </div>
-                            ) 
+                            ) : ''
                         }
-                </div>
+                </aside>
             </div> 
         </>
     )

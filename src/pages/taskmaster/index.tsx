@@ -67,17 +67,17 @@ export function TaskMaster(){
                 <div className="flex gap-10">
                     <div className="relative">
                         <label htmlFor="taskTitle" className="absolute -top-5 left-3 text-[0.8rem]">Título</label>
-                        <input type="text" placeholder="..." id="taskTitle" {...register('taskTitle')} className="border bg-slate-800/80 border-slate-700 rounded-xl w-100 px-5 py-1 outline-0"/>
+                        <input type="text" placeholder="..." id="taskTitle" {...register('taskTitle')} className="border bg-slate-800 border-slate-700 rounded-xl w-100 px-5 py-1 outline-0"/>
                         {errors.taskTitle && <span className="absolute -bottom-4 left-2 text-red-700 text-[0.75rem]">{errors.taskTitle.message}</span>}
                     </div>
                     <div className="relative">
                         <label htmlFor="taskType" className="absolute -top-5 left-3 text-[0.8rem]">Categoria</label>
-                        <input type="text" placeholder="..." id="taskType" {...register('taskType')} className="border bg-slate-800/80 border-slate-700 rounded-xl w-50 px-5 py-1 outline-0"/>
+                        <input type="text" placeholder="..." id="taskType" {...register('taskType')} className="border bg-slate-800 border-slate-700 rounded-xl w-50 px-5 py-1 outline-0"/>
                         {errors.taskType && <span className="absolute -bottom-4 left-2 text-red-700 text-[0.75rem]">{errors.taskType.message}</span>}
                     </div>
                     <div className="relative">
                         <label htmlFor="taskPriority" className="absolute -top-5 left-3 text-[0.8rem]">Prioridade</label>
-                        <select id="taskPriority" {...register('taskPriority')} className="border bg-slate-800/80 border-slate-700 rounded-xl w-50 px-5 py-1">
+                        <select id="taskPriority" {...register('taskPriority')} className="border bg-slate-800 border-slate-700 rounded-xl w-50 px-5 py-1">
                             <option value="">Selecione</option>
                             <option value="100">Emergência</option>
                             <option value="75">Muita Urgência</option>

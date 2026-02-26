@@ -156,12 +156,12 @@ export function MoneyFlow(){
                     <div className="flex gap-10">
                         <div className="relative">
                             <label htmlFor="incomeDescription" className="absolute -top-5 left-3 text-[0.8rem]">Descrição da Entrada</label>
-                            <input type="text" placeholder="..." id="incomeDescription" {...incomeRegister("incomeDescription")} className="border bg-slate-800/80 border-slate-700 rounded-xl w-100 px-5 py-1 outline-0"/>
+                            <input type="text" placeholder="..." id="incomeDescription" {...incomeRegister("incomeDescription")} className="border bg-slate-800 border-slate-700 rounded-xl w-100 px-5 py-1 outline-0"/>
                             <span className="absolute -bottom-4 left-2 text-red-700 text-[0.75rem]"></span>
                         </div>
                         <div className="relative">
                             <label htmlFor="incomeValue" className="absolute -top-5 left-3 text-[0.8rem]">Valor da Entrada</label>
-                            <input type="number" placeholder="R$" id="incomeValue" {...incomeRegister("incomeValue", { valueAsNumber: true })} className="border bg-slate-800/80 border-slate-700 rounded-xl w-50 px-5 py-1 outline-0"/>
+                            <input type="number" placeholder="R$" id="incomeValue" {...incomeRegister("incomeValue", { valueAsNumber: true })} className="border bg-slate-800 border-slate-700 rounded-xl w-50 px-5 py-1 outline-0"/>
                             { incomeErrors.incomeValue && <span className="absolute -bottom-4 left-2 text-red-700 text-[0.75rem]">{incomeErrors.incomeValue.message}</span>}
                         </div>
                     </div>
@@ -176,12 +176,12 @@ export function MoneyFlow(){
                     <div className="flex gap-10">
                         <div className="relative">
                             <label htmlFor="expenseDescription" className="absolute -top-5 left-3 text-[0.8rem]">Descrição da Saída</label>
-                            <input type="text" placeholder="..." id="expenseDescription" {...expenseRegister("expenseDescription")} className="border bg-slate-800/80 border-slate-700 rounded-xl w-100 px-5 py-1 outline-0"/>
+                            <input type="text" placeholder="..." id="expenseDescription" {...expenseRegister("expenseDescription")} className="border bg-slate-800 border-slate-700 rounded-xl w-100 px-5 py-1 outline-0"/>
                             <span className="absolute -bottom-4 left-2 text-red-700 text-[0.75rem]"></span>
                         </div>
                         <div className="relative">
                             <label htmlFor="expenseValue" className="absolute -top-5 left-3 text-[0.8rem]">Valor da Saída</label>
-                            <input type="number" placeholder="R$" id="expenseValue" {...expenseRegister("expenseValue", { valueAsNumber: true })} className="border bg-slate-800/80 border-slate-700 rounded-xl w-50 px-5 py-1 outline-0"/>
+                            <input type="number" placeholder="R$" id="expenseValue" {...expenseRegister("expenseValue", { valueAsNumber: true })} className="border bg-slate-800 border-slate-700 rounded-xl w-50 px-5 py-1 outline-0"/>
                             {expenseErrors.expenseValue && <span className="absolute -bottom-4 left-2 text-red-700 text-[0.75rem]"> {expenseErrors.expenseValue.message}</span>}
                         </div>
                     </div>

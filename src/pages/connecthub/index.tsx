@@ -22,8 +22,9 @@ export function ConnectHub(){
     })
 
     type IUserForm = z.infer<typeof formRules>
+    type IUser = IUserForm & {userId: string}
 
-    const [allUsers, setUser] = useState<IUserForm[]>(() => {
+    const [allUsers, setUsers] = useState<IUser[]>(() => {
         const storedUsers = localStorage.getItem("users")
         return storedUsers ? JSON.parse(storedUsers) : []
     })
@@ -43,23 +44,30 @@ export function ConnectHub(){
 
     const [isConntactSidebarOpen, setIsConntactSidebarOpen] = useState(false)
     const [hasNotification, setNotification] = useState(false)
-
+    const [activeUserEmail, setActiveUserEmail] = useState<string | null>(null)
     function submitForm(data: IUserForm){
         reset()
 
-        const newUSer: IUserForm = ({
+        const newUSer: IUser = ({
+            userId: crypto.randomUUID(),
             userName: data.userName,
             userEmail: data.userEmail,
             userNumber: data.userNumber
         })
 
         hasNotification ? '' : setNotification(!hasNotification)
-        setUser(oldState => [newUSer, ...oldState])
+        setUsers(oldState => [newUSer, ...oldState])
     }
 
     function openSidebar(sidebar: "contact" | "task"){
+        setActiveUserEmail(null)
         sidebar === "contact" ? setIsConntactSidebarOpen(!isConntactSidebarOpen) : ''
         hasNotification ? setNotification(!hasNotification) : '' 
+    }
+
+    function deleteContact(userId: string): void {
+        const newUsers = allUsers.filter(user => user.userId !== userId)
+        setUsers(newUsers)
     }
 
     return (
@@ -97,13 +105,22 @@ export function ConnectHub(){
                         { hasNotification ? <span className='absolute top-0 -right-0.5 rounded-xl bg-green-400 w-2.25 h-2.25 border border-green-600'></span> : ''}
                         <RiContactsBookFill className='size-5'/>
                     </div>
-                        <h1 className='hideScrollbar text-3xl font-bold text-slate-100 text-left py-5 overflow-scroll'>Meus Contatos</h1>
+                    <section className='relative w-full h-full overflow-hidden'>
+                        <h1 className='text-3xl font-bold text-slate-100 text-left py-5 whitespace-nowrap'>Meus Contatos</h1>
+                        { allUsers.length == 0 ? <span className='text-slate-400 text-sm text-center whitespace-nowrap'>Você ainda não cadastrou nenhum contato</span> : ''}
                         <div className='hideScrollbar flex flex-col justify-start gap-3 h-[72vh] overflow-scroll'>
                             {
                                 allUsers.length > 0 && (
                                     allUsers.map((user) => (
-                                        <div key={user.userEmail} className='relative flex justify-between border-l border-sky-500 pl-5'>
-                                            <BsThreeDotsVertical className='absolute right-0 top-0 text-slate-400 cursor-pointer'/>
+                                        <div key={user.userId} className='relative flex justify-between border-l border-sky-500 pl-5'>
+                                            <div className='absolute right-0 top-0 cursor-pointer'>
+                                                <BsThreeDotsVertical onClick={() => setActiveUserEmail(activeUserEmail === user.userId ? null : user.userId)} className='text-slate-400 hover:text-sky-500'/>
+                                                <div className={`${activeUserEmail === user.userId ? 'block' : 'hidden'} border border-slate-700 rounded-md overflow-hidden bg-slate-800 absolute right-1 top-6`}>
+                                                    <p className='border-slate-700 px-3 py-0.5 whitespace-nowrap hover:text-slate-300'>Atualizar contato</p>
+                                                    <p onClick={() => deleteContact(user.userId)} className='border-t border-slate-700 px-3 py-0.5 whitespace-nowrap hover:text-slate-300'>Deletar contato</p>
+                                                </div>
+                                            </div>
+                                            
                                             <div className='flex flex-col'>
                                                 <p className='flex gap-3 items-center'>
                                                     <FaUser className='text-sky-400'/> 
@@ -123,14 +140,11 @@ export function ConnectHub(){
                                 ) 
                             }
                         </div>
-                        {
-                            isConntactSidebarOpen ? (
-                                <div className='flex justify-center w-full'>
-                                    <span className='absolute bottom-12 h-px w-[25%] bg-slate-600'></span>
-                                    <span className='absolute bottom-10 h-px w-[5%] bg-slate-600'></span>
-                                </div>
-                            ) : ''
-                        }
+                        <div className='flex justify-center w-full'>
+                            <span className='absolute bottom-12 h-px w-[25%] bg-slate-600'></span>
+                            <span className='absolute bottom-10 h-px w-[5%] bg-slate-600'></span>
+                        </div>
+                    </section>
                 </aside>
             </div> 
         </>
